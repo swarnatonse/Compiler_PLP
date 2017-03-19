@@ -321,7 +321,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 			throw new TypeCheckException("Ident is not visible in current scope!");
 		}
 		identX.setDec(result);
-		return null;
+		return identX.getTypeName();
 	}
 
 	@Override

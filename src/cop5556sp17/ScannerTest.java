@@ -437,7 +437,6 @@ public class ScannerTest {
 		String input = "abc def/n345 #abc";
 		Scanner scanner = new Scanner(input);
 		thrown.expect(IllegalCharException.class);
-		thrown.expectMessage("#");
 		scanner.scan();
 	}
 	
