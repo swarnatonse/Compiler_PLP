@@ -183,19 +183,23 @@ public class Parser {
 		//System.out.println(t.getText());
 		match(LBRACE);
 		//System.out.println(t.getText());
+		while(t.isKind(KW_INTEGER) || t.isKind(KW_BOOLEAN) || t.isKind(KW_IMAGE) || t.isKind(KW_FRAME)||t.isKind(OP_SLEEP)||t.isKind(KW_WHILE)||t.isKind(KW_IF)||t.isKind(IDENT)||t.isKind(KW_SCALE)||t.isKind(OP_BLUR)
+				||t.isKind(OP_GRAY)||t.isKind(OP_CONVOLVE)||t.isKind(KW_SHOW)||t.isKind(KW_HIDE)||t.isKind(KW_MOVE)||t.isKind(KW_XLOC)||t.isKind(KW_YLOC)||t.isKind(OP_WIDTH)||t.isKind(OP_HEIGHT)){
 		if(t.isKind(KW_INTEGER) || t.isKind(KW_BOOLEAN) || t.isKind(KW_IMAGE) || t.isKind(KW_FRAME)){
 			//d = new ArrayList<Dec>();
 			while(t.isKind(KW_INTEGER) || t.isKind(KW_BOOLEAN) || t.isKind(KW_IMAGE) || t.isKind(KW_FRAME)){
 				d.add(dec());
 			}
 		}
-		if(t.isKind(OP_SLEEP)||t.isKind(KW_WHILE)||t.isKind(KW_IF)||t.isKind(IDENT)/*||t.isKind(KW_IDENT)*/){
+		if(t.isKind(OP_SLEEP)||t.isKind(KW_WHILE)||t.isKind(KW_IF)||t.isKind(IDENT)||t.isKind(KW_SCALE)||t.isKind(OP_BLUR)
+				||t.isKind(OP_GRAY)||t.isKind(OP_CONVOLVE)||t.isKind(KW_SHOW)||t.isKind(KW_HIDE)||t.isKind(KW_MOVE)||t.isKind(KW_XLOC)||t.isKind(KW_YLOC)||t.isKind(OP_WIDTH)||t.isKind(OP_HEIGHT)){
 			//s = new ArrayList<Statement>();
 			//System.out.println(t.getText());
-			while(t.isKind(OP_SLEEP)||t.isKind(KW_WHILE)||t.isKind(KW_IF)||t.isKind(IDENT)/*||t.isKind(KW_IDENT)*/){
+			while(t.isKind(OP_SLEEP)||t.isKind(KW_WHILE)||t.isKind(KW_IF)||t.isKind(IDENT)||t.isKind(KW_SCALE)||t.isKind(OP_BLUR)
+					||t.isKind(OP_GRAY)||t.isKind(OP_CONVOLVE)||t.isKind(KW_SHOW)||t.isKind(KW_HIDE)||t.isKind(KW_MOVE)||t.isKind(KW_XLOC)||t.isKind(KW_YLOC)||t.isKind(OP_WIDTH)||t.isKind(OP_HEIGHT)){
 				s.add(statement());
 			}
-		}
+		}}
 		match(RBRACE);
 		b = new Block(ft,d,s);
 		return b;
@@ -281,6 +285,12 @@ public class Parser {
 		}
 		else if(t.isKind(KW_IF)){
 			st = ifStatement();
+		}
+		else if(t.isKind(KW_SCALE)||t.isKind(OP_BLUR)||t.isKind(OP_GRAY)||t.isKind(OP_CONVOLVE)||t.isKind(KW_SHOW)
+				||t.isKind(KW_HIDE)||t.isKind(KW_MOVE)||t.isKind(KW_XLOC)||t.isKind(KW_YLOC)||t.isKind(OP_WIDTH)
+				||t.isKind(OP_HEIGHT)){
+			st = chain();
+			match(SEMI);
 		}
 		else if(t.isKind(IDENT)){
 			Token t1 = scanner.peek();

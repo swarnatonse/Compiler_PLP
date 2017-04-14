@@ -125,13 +125,13 @@ public class TypeCheckVisitorTest {
 	
 	@Test
 	public void testChain() throws Exception{
-		String input = "p url z {\nimage y \n y -> width -> xloc;}";
+		String input = "tos url u,\n integer x\n{integer y image i u -> i; i -> height; frame f i -> scale (x) -> f;}";
 		Scanner scanner = new Scanner(input);
 		scanner.scan();
 		Parser parser = new Parser(scanner);
 		ASTNode program = parser.parse();
 		TypeCheckVisitor v = new TypeCheckVisitor();
-		thrown.expect(TypeCheckVisitor.TypeCheckException.class);
+		//thrown.expect(TypeCheckVisitor.TypeCheckException.class);
 		program.visit(v, null);		
 	}
 

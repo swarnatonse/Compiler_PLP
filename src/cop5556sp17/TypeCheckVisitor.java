@@ -226,6 +226,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 		if(result == null){
 			throw new TypeCheckException("Ident is not visible in current scope!");
 		}
+		identChain.setDec(result);
 		identChain.setTypeName(result.getTypeName());
 		return identChain.getTypeName();
 	}
@@ -330,7 +331,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 		TypeName thetype = Type.getTypeName(paramDec.getFirstToken());
 		paramDec.setTypeName(thetype);
 		if(symtab.insert(paramDec.getIdent().getText(), paramDec) == false){
-			throw new Exception("Redeclaration occurred!");
+			throw new TypeCheckException("Redeclaration occurred!");
 		}
 		return thetype;
 	}

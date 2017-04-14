@@ -7,6 +7,7 @@ public class Dec extends ASTNode {
 	
 	final Token ident;
 	TypeName tn;
+	public int slotNumber;
 
 	public Dec(Token firstToken, Token ident/*, TypeName tn*/) {
 		super(firstToken);

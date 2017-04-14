@@ -10,9 +10,7 @@ import cop5556sp17.AST.Dec;
 
 
 public class SymbolTable {
-	
-	
-	//TODO  add fields
+
 	int current_scope;
 	int next_scope;
 	Stack<Integer> scope_stack;
@@ -28,21 +26,15 @@ public class SymbolTable {
 		scope_stack.push(current_scope);
 	}
 	
-	
 	/**
 	 * leaves scope
 	 */
 	public void leaveScope(){
-		//TODO:  IMPLEMENT THIS
-		//System.out.println("Leaving "+current_scope);
 		scope_stack.pop();
 		current_scope = scope_stack.peek();
-		//System.out.println("Now scope is "+current_scope);
 	}
 	
 	public boolean insert(String ident, Dec dec){
-		//TODO:  IMPLEMENT THIS
-		//System.out.println("Adding "+ident+" for "+current_scope);
 		if(symtab.get(ident) == null){
 			symtab.put(ident, new HashMap<Integer, Dec>());
 		}
@@ -56,12 +48,10 @@ public class SymbolTable {
 	}
 	
 	public Dec lookup(String ident){
-		//TODO:  IMPLEMENT THIS
 		if(symtab.get(ident) == null)
 			return null;
 		else{
 			for(int i = scope_stack.size()-1; i>0; i--){
-				//System.out.println("Stack Content: "+scope_stack.get(i));
 				if(symtab.get(ident).get(scope_stack.get(i)) != null){
 					return symtab.get(ident).get(scope_stack.get(i));
 				}
@@ -71,7 +61,6 @@ public class SymbolTable {
 	}
 		
 	public SymbolTable() {
-		//TODO:  IMPLEMENT THIS
 		current_scope = 1;
 		next_scope = 1;
 		scope_stack = new Stack<Integer>();
