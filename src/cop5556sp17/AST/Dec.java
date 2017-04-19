@@ -4,10 +4,10 @@ import cop5556sp17.AST.Type.TypeName;
 import cop5556sp17.Scanner.Token;
 
 public class Dec extends ASTNode {
-	
+
 	final Token ident;
 	TypeName tn;
-	public int slotNumber;
+	int slotNumber;
 
 	public Dec(Token firstToken, Token ident/*, TypeName tn*/) {
 		super(firstToken);
@@ -23,11 +23,19 @@ public class Dec extends ASTNode {
 	public Token getIdent() {
 		return ident;
 	}
-	
+
+	public int getSlotNumber(){
+		return slotNumber;
+	}
+
+	public void setSlotNumber( int sn ){
+		this.slotNumber = sn;
+	}
+
 	public void setTypeName(TypeName tn){
 		this.tn = tn;
 	}
-	
+
 	public TypeName getTypeName(){
 		return tn;
 	}
@@ -36,8 +44,8 @@ public class Dec extends ASTNode {
 	public String toString() {
 		return "Dec [ident=" + ident + ", firstToken=" + firstToken + "]";
 	}
-	
-	
+
+
 
 	@Override
 	public int hashCode() {

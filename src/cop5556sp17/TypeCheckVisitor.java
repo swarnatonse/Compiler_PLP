@@ -104,9 +104,13 @@ public class TypeCheckVisitor implements ASTVisitor {
 			//System.out.println("c9!");
 			binaryChain.setTypeName(IMAGE);
 		}
-		else if(chain0.getTypeName() == IMAGE && chain1 instanceof IdentChain && op.isKind(ARROW)){
+		else if(chain0.getTypeName() == IMAGE && chain1 instanceof IdentChain && chain1.getTypeName() == IMAGE && op.isKind(ARROW)){
 			//System.out.println("c!");
 			binaryChain.setTypeName(IMAGE);
+		}
+		else if(chain0.getTypeName() == INTEGER && chain1 instanceof IdentChain && chain1.getTypeName() == INTEGER && op.isKind(ARROW)){
+			//System.out.println("c!");
+			binaryChain.setTypeName(INTEGER);
 		}
 		else{
 			throw new TypeCheckException("BinaryChain type check exception!");
@@ -122,7 +126,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 		TypeName e0type = binaryExpression.getE0().getTypeName();
 		TypeName e1type = binaryExpression.getE1().getTypeName();
 		Token op = binaryExpression.getOp();
-		
+
 		if(e0type == INTEGER && e1type == INTEGER && (op.isKind(PLUS)||op.isKind(MINUS))){
 			binaryExpression.setTypeName(INTEGER);
 		}
@@ -135,13 +139,16 @@ public class TypeCheckVisitor implements ASTVisitor {
 		else if(e0type == INTEGER && e1type == IMAGE && (op.isKind(TIMES))){
 			binaryExpression.setTypeName(IMAGE);
 		}
-		else if(e0type == IMAGE && e1type == INTEGER && (op.isKind(TIMES))){
+		else if(e0type == IMAGE && e1type == INTEGER && (op.isKind(TIMES) || op.isKind(DIV))){
+			binaryExpression.setTypeName(IMAGE);
+		}
+		else if(e0type == IMAGE && e1type == INTEGER && (op.isKind(MOD))){
 			binaryExpression.setTypeName(IMAGE);
 		}
 		else if(e0type == INTEGER && e1type == INTEGER && (op.isKind(LT)||op.isKind(LE)||op.isKind(GE)||op.isKind(GT))){
 			binaryExpression.setTypeName(BOOLEAN);
 		}
-		else if(e0type == BOOLEAN && e1type == BOOLEAN && (op.isKind(LT)||op.isKind(LE)||op.isKind(GE)||op.isKind(GT))){
+		else if(e0type == BOOLEAN && e1type == BOOLEAN && (op.isKind(LT)||op.isKind(LE)||op.isKind(GE)||op.isKind(GT)||op.isKind(OR)||op.isKind(AND))){
 			binaryExpression.setTypeName(BOOLEAN);
 		}
 		else if(op.isKind(EQUAL)||op.isKind(NOTEQUAL)){
@@ -154,7 +161,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 		else{
 			throw new TypeCheckException("Binary Expression type check exception!");
 		}
-		
+
 		return binaryExpression.getTypeName();
 	}
 
@@ -360,7 +367,7 @@ public class TypeCheckVisitor implements ASTVisitor {
 			}
 			imageOpChain.setTypeName(IMAGE);
 		}
-		
+
 		return imageOpChain.getTypeName();
 	}
 
